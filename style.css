@@ -1,0 +1,816 @@
+/* Simple single-page layout, ready for project content and visual references. */
+* {
+  box-sizing: border-box;
+}
+
+/* Temporary outer background; replace with a background image later. */
+html {
+  background: #bfbfbf;
+}
+
+/* Opaque paper, using the existing content width and padding. */
+body {
+  --page-padding: clamp(1rem, 4vw, 3rem);
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: var(--page-padding);
+  background: #bfbfbf;
+  color: #111;
+  font-family: "Electrolize";
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Widen only the paper by 1cm per side, capped at the viewport width. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: min(100%, calc(1200px + var(--page-padding) + 2cm));
+  margin-inline: auto;
+  z-index: -1;
+  background: #fff;
+  pointer-events: none;
+}
+
+.project-header,
+main {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 0 2rem;
+  font-family: "Gajraj One";
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 400;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.project-nav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid currentColor;
+}
+
+.project-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  padding: 1rem;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.project-nav a + a {
+  border-left: 1px solid currentColor;
+}
+
+.project-nav a:hover {
+  text-decoration: underline;
+}
+
+.project-nav a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -5px;
+}
+
+section {
+  padding-block: 3rem;
+  scroll-margin-top: 1rem;
+}
+
+section + section {
+  border-top: 1px solid #ddd;
+}
+
+/* Empty blocks reserve space without adding unapproved text or imagery. */
+.content-placeholder {
+  min-height: 18rem;
+  border: 1px dashed #ccc;
+}
+
+@media (max-width: 600px) {
+  .project-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-nav a:nth-child(3) {
+    border-left: 0;
+  }
+
+  .project-nav a:nth-child(n + 3) {
+    border-top: 1px solid currentColor;
+  }
+}
+
+/* Match the existing section spacing and title-plus-placeholder height. */
+.gallery {
+  padding-top: 3rem;
+}
+
+.gallery-frame {
+  position: relative;
+  height: calc(18rem + 1.5rem + clamp(2.25rem, 4.5vw, 3rem) + 5cm);
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gallery-image:not([hidden]) {
+  display: block;
+}
+
+.gallery-controls {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gallery-controls button {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+}
+
+.gallery-controls button:disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+.gallery-controls button:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 3px;
+}
+
+.gallery-counter:not(:empty) {
+  padding: 0.25rem 0.5rem;
+  background: #fff;
+}
+
+/* Match the white paper width without changing the existing page layout. */
+.site-footer {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% + var(--page-padding) + var(--page-padding)), calc(1200px + var(--page-padding) + 2cm));
+  margin-bottom: calc(-1 * var(--page-padding));
+  padding: 3rem var(--page-padding);
+  background: #000;
+  color: #fff;
+  text-align: left;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.footer-logo {
+  position: relative;
+  width: 10rem;
+  max-width: 100%;
+  aspect-ratio: 2140 / 750;
+  overflow: hidden;
+  background: #000;
+  margin-bottom: 1.5rem;
+}
+
+/* Display only the logo bounds while keeping the supplied PNG unchanged. */
+.footer-logo img {
+  position: absolute;
+  width: 163.925234%;
+  max-width: none;
+  height: auto;
+  left: -32.242991%;
+  top: -115.333333%;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0;
+}
+
+.site-footer a,
+.site-footer a:visited {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-footer a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.footer-members p {
+  margin: 0 0 1rem;
+}
+
+.footer-members ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-note {
+  margin: 3rem 0 0;
+  text-align: center;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  justify-self: end;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.footer-members,
+.footer-contact {
+  overflow-wrap: anywhere;
+}
+
+/* Fixed decorative background; the opaque paper stays above it. */
+.page-background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-background-left,
+.page-background-right {
+  background-image: var(--side-background-image, none);
+  background-color: #bfbfbf;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page-background-right {
+  transform: scaleX(-1);
+}
+
+/* Development uses portrait boards matching the first supplied image. */
+.development-content {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
+  padding-block: 3rem;
+}
+
+.development-board {
+  width: 100%;
+  aspect-ratio: 2480 / 3508;
+  min-width: 0;
+  background: #fff;
+}
+
+.development-board > img,
+.development-cell > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.development-logos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.development-tapes {
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.development-cell {
+  min-width: 0;
+  min-height: 0;
+}
+
+.development-actions {
+  position: fixed;
+  top: 75%;
+  right: max(1rem, calc((100% - 1200px - clamp(1rem, 4vw, 3rem) - 2cm) / 4 - 2rem));
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.development-actions a,
+.development-actions a:visited {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+}
+
+.development-actions a:hover {
+  text-decoration: underline;
+}
+
+.project-home-link,
+.project-home-link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.development-actions a:focus-visible,
+.project-home-link:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 3px;
+}
+
+button.development-board {
+  display: block;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  cursor: zoom-in;
+}
+button.development-board:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 4px;
+}
+.image-lightbox {
+  padding: 3rem 0 0;
+  border: 0;
+  background: transparent;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: visible;
+}
+.image-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+.lightbox-image {
+  background: #fff;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 6rem);
+  object-fit: contain;
+}
+.lightbox-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Shared subpage headings use the existing Electrolize subtitle styling. */
+.page-heading {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+}
+
+.subpage-content {
+  min-height: 24rem;
+  padding-block: 3rem;
+}
+
+/* Keep the Development subtitle separate from the image grid. */
+.development-page {
+  padding-top: 3rem;
+}
+
+/* Home section titles and the decorative font specimen. */
+#overview-title,
+.brand-title {
+  font-family: "Gajraj One";
+  font-weight: 400;
+}
+.brand-description {
+  font-family: "Electrolize";
+  font-weight: 400;
+}
+.brand-font-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+.brand-font-panel {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+.brand-font-first { aspect-ratio: 657 / 430; }
+.brand-font-second { aspect-ratio: 657 / 430; }
+.brand-font-panel img {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.brand-font-first img { top: -25.581395%; }
+.brand-font-second img { top: -125.581395%; }
+@media (max-width: 600px) {
+  .brand-font-panels { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Two artworks share one carousel slide, in the supplied left-to-right order. */
+.gallery-pair:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.gallery-pair img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.brand-main-element {
+  width: min(100%, 36rem);
+  margin: 2rem auto 3rem;
+}
+.brand-font-main { aspect-ratio: 510 / 110; }
+.brand-font-main img {
+  width: 128.823529%;
+  max-width: none;
+  top: 0;
+}
+.brand-font-group { margin: 0; }
+#brand-toolkit figcaption {
+  margin-top: 1rem;
+  text-align: center;
+  font-family: "Electrolize";
+}
+
+#pq27-walls-title {
+  font-family: "Gajraj One";
+  font-weight: 400;
+}
+.walls-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+.walls-images img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+}
+
+#instagram-title {
+  font-family: "Gajraj One";
+  font-weight: 400;
+}
+.home-image {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  font: inherit;
+  cursor: zoom-in;
+}
+.home-image:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 4px;
+}
+.instagram-three,
+.instagram-two {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+}
+.instagram-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.instagram-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 2rem;
+}
+#instagram img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Remove mockup canvas margins without stretching the artwork. */
+.instagram-six {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 0.566fr)) repeat(3, minmax(0, 0.71054fr));
+  gap: clamp(0.25rem, 0.65vw, 0.5rem);
+  align-items: start;
+}
+.instagram-cropped {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1015 / 1794;
+}
+#instagram .instagram-cropped img {
+  position: absolute;
+  width: 295.566502%;
+  max-width: none;
+  height: auto;
+  left: -97.73399%;
+  top: -4.738016%;
+}
+.instagram-poster { aspect-ratio: 3525 / 4961; }
+.instagram-story {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+#instagram .instagram-story img {
+  position: absolute;
+  height: 130.062087%;
+  width: auto;
+  max-width: none;
+  left: 50%;
+  top: -15.061454%;
+  transform: translateX(-50%);
+}
+
+.staff-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+.staff-images img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.merch-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+.merch-images figure { margin: 0; min-width: 0; }
+.merch-images .home-image { aspect-ratio: 1; }
+.merch-images img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.merch-images figcaption {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Fill the sticker column while clipping only the surplus lower canvas. */
+.merch-stickers {
+  position: relative;
+  overflow: hidden;
+}
+.merch-images .merch-stickers img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.merch-badge {
+  width: 100%;
+  margin: 2rem auto 0;
+}
+.badge-crop {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4000 / 1750;
+}
+.badge-crop img {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+.merch-badge figcaption {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* A normal block establishes reliable crop bounds inside each button. */
+.instagram-cropped { aspect-ratio: auto; overflow: visible; }
+.instagram-crop-window {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1015 / 1794;
+  overflow: hidden;
+}
+.logos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+}
+.logo-panel {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+}
+.logo-panel img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 147%;
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+.logo-stacked-black img { width: 80%; }
+.logo-stacked-white, .logo-dark { background: #000; }
+#feedback-us { min-height: 12rem; }
+
+/* Compact, centered feedback letterform with its original proportions. */
+.feedback-letterform {
+  width: min(100%, 22rem);
+  margin: 0 auto;
+}
+.feedback-letterform img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.feedback-letterform figcaption {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Final Folio reserves the future PDF link above the image-only works. */
+.pdf-download-slot { min-height: 5rem; }
+.final-folio-page .logo-stacked-white img { width: 132.4%; }
+.final-folio-page .logo-horizontal img { width: 131.1%; }
+
+/* Final Works: enlarge the story artwork by excluding its blank side margins. */
+.final-instagram-window {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1015 / 1794;
+  overflow: hidden;
+}
+.final-instagram-window img {
+  position: absolute;
+  display: block;
+  width: 295.566502%;
+  max-width: none;
+  height: auto;
+  left: -97.73399%;
+  top: -4.738016%;
+}
+.final-folio-page .final-instagram { aspect-ratio: auto; align-self: center; }
+.final-pairs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+}
+.final-pairs .development-board,
+.final-wall .development-board { aspect-ratio: auto; }
+.final-pairs .development-board > img,
+.final-wall .development-board > img { height: auto; }
+.final-wall { margin-top: 3rem; }
+
+/* Enlarge only row five's first artwork within its existing grid space. */
+.final-story-window {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2480 / 3508;
+  overflow: hidden;
+}
+.final-story-window img {
+  position: absolute;
+  display: block;
+  height: 130%;
+  width: auto;
+  max-width: none;
+  left: 50%;
+  top: -15%;
+  transform: translateX(-50%);
+}
+
+/* Additional Final Works: cropped badge pair, followed by three-column rows. */
+.final-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+.final-badges > .home-image > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.final-badge-window {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4000 / 1750;
+  overflow: hidden;
+}
+.final-badge-window img {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+/* Add side artwork later using --side-background-image: url("./assets/background.jpg"). */
+.video-frame { width:100%; aspect-ratio:16/9; border:1px solid #111; background:#000; }
+.video-frame iframe { display:block; width:100%; height:100%; border:0; }
+.video-source { text-align:center; margin:1rem 0 0; }
+.video-source a { color:inherit; text-underline-offset:.25em; }
+.image-placeholder { border:1px dashed #ccc; background:#fafafa; min-width:0; }
+.walls-images > .image-placeholder, .staff-images > .image-placeholder { aspect-ratio:4961/3508; }
+.instagram-cropped.image-placeholder { aspect-ratio:1015/1794; }
+.merch-images .image-placeholder { aspect-ratio:1; }
+.feedback-letterform .image-placeholder { aspect-ratio:1055/1491; }
+.footer-heading { font-size:clamp(1.5rem,3vw,2.5rem); margin:0 0 1rem; }
+.footer-fonts { margin:3rem 0 0; text-align:center; }
+@media(max-width:600px) {
+ .logos-grid,.walls-images,.staff-images,.merch-images,.instagram-two {gap:1rem;}
+ .instagram-six {grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;}
+ .gallery-frame {height:auto;aspect-ratio:4/3;}
+}
