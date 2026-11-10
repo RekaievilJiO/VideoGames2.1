@@ -814,3 +814,17 @@ button.development-board:focus-visible {
  .instagram-six {grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;}
  .gallery-frame {height:auto;aspect-ratio:4/3;}
 }
+
+/* Artwork stays fixed in the visible left and right gutters. */
+.page-background { display:block; }
+.page-background-left,
+.page-background-right {
+ position:absolute;
+ top:0;
+ bottom:0;
+ width:max(0px, calc((100% - 1200px - var(--page-padding) - 2cm) / 2));
+ background-size:cover;
+ background-position:center;
+}
+.page-background-left { left:0; background-image:url("./assets/background-left.webp"); }
+.page-background-right { right:0; background-image:url("./assets/background-right.jpg"); transform:none; }
